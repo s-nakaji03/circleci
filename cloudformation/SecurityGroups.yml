@@ -56,6 +56,19 @@ Resources:
           Value: ALBSG
       VpcId: !ImportValue my-VpcId
 
+  # Secrets Manager
+  RDSSecret: 
+    Type: "AWS::SecretsManager::Secret"
+    Properties:
+      Name: "RDSSecret"
+      Description: "RDS password for my RDS instance"
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "admin"}'
+        GenerateStringKey: "password"
+        PasswordLength: 16
+        ExcludeCharacters: '"@/\"[]*?!'
+
+
 
 # Outputs
 Outputs:
@@ -73,3 +86,8 @@ Outputs:
     Value: !Ref ALBSG
     Export:
       Name: ALBSGId
+
+  RDSSecretArn:
+    Value: !Ref RDSSecret
+    Export:
+      Name: RDSSecretArn
