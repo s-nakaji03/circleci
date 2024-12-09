@@ -15,23 +15,16 @@ jobs:
           aws_secret_access_key: AWS_SECRET_ACCESS_KEY
           region: AWS_DEFAULT_REGION
       - run:
-          name: deploy cloudformation
+          name: Deploy Cloudformation
           command: |
             set -x
-            aws cloudformation deploy --template-file cloudformation/VPC.yml --stack-name VPC-Subnets
-            aws cloudformation deploy --template-file cloudformation/SecurityGP.yml --stack-name SGsetting --capabilities CAPABILITY_NAMED_IAM
+            aws cloudformation deploy --template-file cloudformation/Network.yml --stack-name VPC-Subnets
+            aws cloudformation deploy --template-file cloudformation/SecurityGroups.yml --stack-name SGsetting --capabilities CAPABILITY_NAMED_IAM
             aws cloudformation deploy --template-file cloudformation/Resorces.yml --stack-name Resorcesetting --capabilities CAPABILITY_IAM
 
 
 workflows:
   version: 2
-  provisioning-deploy:
+  Provisioning:
     jobs:
-      - provisioning-stack
-      - execute-ansible-playbook:
-          requires:
-            - provisioning-stack
-      - execute-serverspec:
-          requires:
-            - execute-ansible-playbook
-            
+      - Create-Stack-Cloudformation            
