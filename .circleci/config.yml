@@ -21,10 +21,26 @@ jobs:
             aws cloudformation deploy --template-file cloudformation/Network.yml --stack-name VPC-Subnets
             aws cloudformation deploy --template-file cloudformation/SecurityGroups.yml --stack-name SGsetting --capabilities CAPABILITY_NAMED_IAM
             aws cloudformation deploy --template-file cloudformation/Resorces.yml --stack-name Resorcesetting --capabilities CAPABILITY_IAM
-
+  
+  Run-ansible:
+    executor: ansible-playbook/default
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - SSH_KEY
+      - ansible-playbook/install:
+          version: ''
+      - ansible-playbook/playbook:
+          playbook: ansible/playbook.yml
+          playbook-options: '-i ansible/inventory'    
 
 workflows:
   version: 2
   Provisioning:
     jobs:
-      - Create-Stack-Cloudformation            
+      - Create-Stack-Cloudformation
+      - Run-ansible:
+          requires:
+            - Create-Stack-Cloudformation       
+
