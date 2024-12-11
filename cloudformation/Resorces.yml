@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Resources Template
 
+#---------------------#
+#-----パラメータ指定----#
+#---------------------#
+
 Parameters:
   InstanceType:
     Type: String
@@ -16,6 +20,11 @@ Parameters:
       - db.t3.micro
       - db.t2.small
       - db.t2.medium
+
+#---------------------#
+#------リソース作成-----#
+#---------------------#
+
 
 # EC2:1
 Resources:
@@ -50,6 +59,23 @@ Resources:
         - Key: Name
           Value: WEB2EC2
       KeyName: mylinuxkeypairs
+
+#EIP1
+  MyEIPAssociation1:
+    Type: "AWS::EC2::EIPAssociation"
+    Properties:
+      AllocationId: eipalloc-02378df53ab69f44b # 既存のEIPアドレスを指定
+      InstanceId: !Ref WEB1EC2
+
+
+#EIP2
+  MyEIPAssociation2:
+    Type: "AWS::EC2::EIPAssociation"
+    Properties:
+      AllocationId: eipalloc-0f6cff4d32e289b91 # 既存のEIPアドレスを指定
+      InstanceId: !Ref WEB2EC2
+
+
 
 # RDS
   RDS:
@@ -125,3 +151,7 @@ Resources:
         !Ref ALB
       Port: 80
       Protocol: HTTP
+
+
+
+
