@@ -42,5 +42,4 @@ workflows:
       - Create-Stack-Cloudformation
       - Run-ansible:
           requires:
-            - Create-Stack-Cloudformation       
-
+            - Create-Stack-Cloudformation
