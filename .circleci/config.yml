@@ -30,7 +30,7 @@ jobs:
           fingerprints:
             - "SHA256:a4kBOXkHOyXprJMlcx6crAR0sTKLaf+Jr8s+WhVTlKw"
       - ansible-playbook/install:
-          version: 2.10.7
+          version: ''
       - ansible-playbook/playbook:
           playbook: ansible/playbook.yml
           playbook-options: '-i ansible/inventory'    
