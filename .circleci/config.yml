@@ -21,8 +21,8 @@ jobs:
           command: |                                       
             set -x                                         
             aws cloudformation deploy --template-file cloudformation/Network.yml --stack-name VPC-Subnets
-            aws cloudformation deploy --template-file cloudformation/SecurityGroups.yml --stack-name SecurityGroups --capabilities CAPABILITY_NAMED_IAM
-            aws cloudformation deploy --template-file cloudformation/Resorces.yml --stack-name Resoures --capabilities CAPABILITY_IAM
+            aws cloudformation deploy --template-file cloudformation/SecurityGroups.yml --stack-name SecurityGroups
+            aws cloudformation deploy --template-file cloudformation/Resorces.yml --stack-name Resoures
   
   Run-ansible:
     executor: ansible-playbook/default
